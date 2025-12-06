@@ -18,7 +18,7 @@ const auth = (...roles: string[]) => {
     const decode = jwt.verify(token as string, config.jwt_secret as string) as JwtPayload;
     req.user = decode as JwtPayload;
 
-    if(roles.length === 0 && !roles.includes(decode.role)) {
+    if(roles.length && !roles.includes(decode.role)) {
       res.status(402).json({
         success: false,
         message: "Your not authorized for this section"
