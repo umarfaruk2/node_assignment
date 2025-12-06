@@ -13,6 +13,12 @@ initDB();
 // user route
 app.use('/api/v1/auth/', authRouter);
 
-
+// 404 page
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: "Page not found"
+  });
+});
 
 export default app;
