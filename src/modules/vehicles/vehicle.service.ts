@@ -15,3 +15,16 @@ export const createVehicleService = async (payload: Ipayload) => {
 
   return result.rows[0];
 }
+
+
+export const getAllVehicleService = async () => {
+  const result = await pool.query(`SELECT * FROM vehicles`);
+
+  return result.rows;
+}
+
+export const getSingleVehicleService = async (id: string)=> {
+  const result = await pool.query(`SELECT * FROM vehicles WHERE id = $1`, [id]);
+
+  return result.rows[0];
+}
