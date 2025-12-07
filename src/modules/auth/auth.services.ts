@@ -42,7 +42,7 @@ export const signinUserService = async (email: string, password: string) => {
   }
   delete user.password;
 
-  const token = jwt.sign({name: user.name, email: user.email, role: user.role}, config.jwt_secret as string, {
+  const token = jwt.sign({id: user.id, name: user.name, email: user.email, role: user.role}, config.jwt_secret as string, {
     expiresIn: "1d"
   });
 
