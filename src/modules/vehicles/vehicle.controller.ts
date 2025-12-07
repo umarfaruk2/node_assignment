@@ -25,12 +25,20 @@ export const getAllVehicle = async (req: Request, res: Response) => {
 
  try {
   const result = await getAllVehicleService() ;
+  if(result.length === 0) {
+    res.status(200).json({
+      success: true,
+      message: "No vehicle found",
+      data: result
+    })
+  } else {
+    res.status(200).json({
+      success: true,
+      message: "Vehicles retrieved successfully",
+      data: result
+    })
+  }
 
-  res.status(200).json({
-    success: true,
-    message: "Vehicles retrieved successfully",
-    data: result
-  })
   } catch (error: any) {
     res.status(400).json({
       success: false,
