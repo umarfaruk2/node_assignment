@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createVehicleService, getAllVehicleService, getSingleVehicleService, updateVehicleService } from "./vehicle.service.js";
+import { createVehicleService, deleteVehicleService, getAllVehicleService, getSingleVehicleService, updateVehicleService } from "./vehicle.service.js";
 
 
 export const createVehicle = async (req: Request, res: Response) => {
@@ -68,6 +68,32 @@ export const updateVehicle = async (req: Request, res: Response) => {
     message: "Vehicles updated successfully",
     data: result
   })
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message
+    })
+  }
+}
+
+export const deleteVehicle = async (req: Request, res: Response) => {
+  const id = req.params.vehicleId;
+ try {
+
+  const userInfo = await getSingleVehicleService(id!) ;
+
+  if(userInfo.availability_status === "booked") {
+    res.status(406).json({
+      success: false,
+      message: "This vehicle is already booked so you can't delete it now",
+    })
+  } else {
+    const result = await deleteVehicleService(id!) ;
+    res.status(200).json({
+      success: true,
+      message: "Vehicles delete successfully",
+    })
+  }
   } catch (error: any) {
     res.status(400).json({
       success: false,
