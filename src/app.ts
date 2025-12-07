@@ -3,6 +3,7 @@ import initDB from "./config/config.db.js";
 import authRouter from "./modules/auth/auth.route.js";
 import vehicleRouter from "./modules/vehicles/vehicle.route.js";
 import userRouter from "./modules/users/user.route.js";
+import bookingRouter from "./modules/bookings/booking.route.js";
 
 const app = express();
 
@@ -20,6 +21,9 @@ app.use('/api/v1/vehicles', vehicleRouter);
 
 // user router
 app.use('/api/v1/users', userRouter);
+
+//booking router
+app.use('/api/v1/bookings', bookingRouter);
 
 
 // 404 page
