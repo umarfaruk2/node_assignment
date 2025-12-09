@@ -109,3 +109,31 @@ export const getBookingService = async (id: number, role: string) => {
       };
     }
 }
+
+
+export const updateBookingService = async (id: string, role: string) => {
+  const booking = await pool.query(`SELECT * FROM bookings WHERE id = $1`, [id]);
+  const vehicle_info = await pool.query(`SELECT * FROM vehicles WHERE id = $1`, [booking.rows[0].vehicle_id]);
+
+  if(role === "admin") {
+    const result = await pool.query(`UPDATE bookings SET status = 'returned' WHERE id = $1 RETURNING *`, [id]);
+    const vehicle_result = await pool.query(`UPDATE vehicles SET availability_status = 'available' WHERE id = $1 RETURNING *`, [vehicle_info.rows[0].id]);
+
+    const final_result = {...result.rows[0], vehicle: {availability_status: vehicle_result.rows[0].availability_status}};
+    await pool.query(`DELETE FROM bookings WHERE id = $1`, [id]);
+    return final_result;
+
+  } else {
+    const check_start_date = Date.parse(booking.rows[0].rent_start_date) - Date.now();
+
+    if(check_start_date > 0) {
+      const result = await pool.query(`UPDATE bookings SET status = 'cancelled' WHERE id = $1 RETURNING *`, [id]);
+      return result.rows[0];
+    } else {
+      return {
+        success: false,
+        message: "You can't cancel the booking, it has already started"
+      }
+    }
+  }
+}
