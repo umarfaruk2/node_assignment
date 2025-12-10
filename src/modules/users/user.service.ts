@@ -40,3 +40,21 @@ export const updateUserService = async (payload: Ipayload, id: string) => {
   const result = await pool.query(query, values);
   return result.rows[0];
 }
+
+
+export const deleteUserService = async (id: string) => {
+  const bookingInfo = await pool.query(`SELECT * FROM bookings WHERE customer_id = $1`, [id]);
+
+  if(bookingInfo.rows[0]?.status === "active") {
+    return {
+      success: false,
+      message: "You can't delete this user,This user have active booking"
+    }
+  }
+  const result = await pool.query(`DELETE FROM users WHERE id = $1`, [id]);
+
+  return {
+    success: true,
+    result: result
+  };
+}

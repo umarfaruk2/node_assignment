@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getAllUserService, updateUserService } from "./user.service.js";
+import { deleteUserService, getAllUserService, updateUserService } from "./user.service.js";
 
 
 export const getAllUser = async (req: Request, res: Response) => {
@@ -54,4 +54,19 @@ export const updateUser = async (req: Request, res: Response) => {
 }
 
 
-// delete user
+export const deleteUser = async (req: Request, res: Response) => {
+  const id = req.params.userId;
+  try {
+  const result = await deleteUserService(id!) ;
+
+  res.status(200).json({
+    success: true,
+    message: `${result.success ? "user deleted successfully" : `${result.message}`}` ,
+  })
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message
+    })
+  }
+}
