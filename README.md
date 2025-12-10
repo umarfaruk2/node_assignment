@@ -43,9 +43,9 @@ npm install
 
 **env file**
 
-PORT = 5000
-DB_URL = postgresql://neondb_owner:npg_qRxb1pzLc3vO@ep-frosty-sea-ada1ppsa-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
-JWT_SECRET = 28c0d43f476c9122ff4800bb3e375f87394f59cda738c8f22ae24aa0536dda251b701644719bf6065480fc0ea69308b30b16303f7e3e9fc91e12ed58fdc9ab05
+- PORT = 5000
+- DB_URL = postgresql://neondb_owner:npg_qRxb1pzLc3vO@ep-frosty-sea-ada1ppsa-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+- JWT_SECRET = 28c0d43f476c9122ff4800bb3e375f87394f59cda738c8f22ae24aa0536dda251b701644719bf6065480fc0ea69308b30b16303f7e3e9fc91e12ed58fdc9ab05
 
 **start the server**
 
