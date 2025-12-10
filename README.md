@@ -40,7 +40,6 @@
 
 npm install
 
----
 
 **env file**
 
